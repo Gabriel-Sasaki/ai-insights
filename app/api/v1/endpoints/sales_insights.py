@@ -6,7 +6,7 @@ from app.db.session import get_db
 
 router = APIRouter()
 
-@router.get("/sales-insights?question={question}")
+@router.get("/sales-insights")
 async def get_sales_insights(
     question: str,
     db: Session = Depends(get_db)
