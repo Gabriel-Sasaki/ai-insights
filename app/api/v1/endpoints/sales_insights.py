@@ -5,7 +5,7 @@ from langchain_community.utilities import SQLDatabase
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from langchain.agents import create_openai_tools_agent
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.messages import SystemMessage
+from langchain_core.messages import SystemMessage, HumanMessage
 
 from app.db.session import get_db
 from app.ai.prompts import SQL_QUERY_PROMPT
@@ -26,6 +26,7 @@ async def get_sales_insights(
     toolkit = SQLDatabaseToolkit(db=database, llm=llm)
     prompt_template = ChatPromptTemplate.from_messages([
         SystemMessage(content=SQL_QUERY_PROMPT),
+        HumanMessage(content=question),
         MessagesPlaceholder("agent_scratchpad"),
     ])
     agent = create_openai_tools_agent(
