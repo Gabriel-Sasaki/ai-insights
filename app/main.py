@@ -10,7 +10,7 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Sales Insights API",
-    description="An API to get insights about sales data using OpenAI's GPT-4o-mini and "\
+    description="An API to get insights about sales data using OpenAI's GPT-4o and "\
                 "SQLAlchemy. Created for a technical assessment by Gabriel Pinto Sasaki.",
     version="0.1"
 )
