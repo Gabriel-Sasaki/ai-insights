@@ -1,7 +1,7 @@
 -- SQLite
 -- Criando o esquema do banco
 CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     sku VARCHAR(50) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
     category VARCHAR(100),
@@ -9,14 +9,14 @@ CREATE TABLE products (
 );
 
 CREATE TABLE customers (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE sales (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     product_id INTEGER REFERENCES products(id),
     customer_id INTEGER REFERENCES customers(id),
     quantity INTEGER NOT NULL,
