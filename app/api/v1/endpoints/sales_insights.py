@@ -10,17 +10,17 @@ from langchain_core.messages import SystemMessage
 from app.db.session import get_db
 from app.ai.prompts import SQL_QUERY_PROMPT
 from app.ai.models import AgentExecutor
-from app.schemas.sales_insights import SalesInsightsRequest, SalesInsightsResponse
+from app.schemas.sales_insights import SalesInsightsResponse
 
 router = APIRouter()
 
 @router.get("/sales-insights")
 async def get_sales_insights(
-    request: SalesInsightsRequest,
+    question: str,
     db: Session = Depends(get_db)
 ) -> SalesInsightsResponse:
     """Get sales insights for a given question."""
-    llm = ChatOpenAI(model="gpt-4o")
+    llm = ChatOpenAI(model="gpt-4o", temperature=0)
     engine = db.get_bind()
     database = SQLDatabase(engine=engine)
     toolkit = SQLDatabaseToolkit(db=database, llm=llm)
@@ -39,6 +39,6 @@ async def get_sales_insights(
         handle_parsing_errors=True
     )
     response = agent_executor.invoke({
-        "input": request.question
+        "input": question
     })
-    return SalesInsightsResponse(ai_answer=response["output"])
+    return SalesInsightsResponse(aiAnswer=response["output"])

@@ -26,5 +26,6 @@ async def get_top_products(db: Session = Depends(get_db)) -> TopProductsResponse
         .order_by(func.sum(Sale.quantity).desc())\
         .limit(5)
     result = db.execute(stmt)
-    top_products = [{"product": prod, "sale_count": sale_count} for prod, sale_count in result]
-    return TopProductsResponse(top_products=top_products)
+    top_products = [{"name": product_name, "salesAmount": sales_amount}
+                    for product_name, sales_amount in result]
+    return TopProductsResponse(topProducts=top_products)
